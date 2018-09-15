@@ -18,6 +18,7 @@ using namespace std;
 bool InputFilter(double in);
 bool EndOfInputStream(istream &input);
 double InputLoop(string s);
+bool InputFilterS(string s);
 
 int main()
 {
@@ -31,13 +32,19 @@ int main()
 
 	//Program logic
 
-	length = InputLoop("length");
+	do // loops the program until ctrl z input
+	{
+		length = InputLoop("length");
 
-	rec.SetLength(length);
+		rec.SetLength(length);
 
-	width = InputLoop("width");
+		width = InputLoop("width");
+	
+		rec.SetWidth(width);
 
-	rec.SetWidth(width);
+		rec.ShowData();
+	} while (!EndOfInputStream(cin));
+	
 
 	//Closing program statements
 	system("pause");
@@ -66,33 +73,27 @@ double InputLoop(string s)
 		cout << "Please input the " << s << " of the Rectangle." << endl;
 		//cin >> d;
 		getline(cin, line, '\n');
-		for (int i = 0; i < line.length; i++)
-		{
-			
-			if (isalpha(line[i]))
-			{
-				cout << "alphabet";
-			}
-		}
-		try
-		{
-			stod(line);
-		}
-		catch (const invalid_argument)
-		{
-			cout << "You cannot have letters in the input.";
-		}
-		catch (const out_of_range)
-		{
-			cout << "You cannot have letters in the input.";
-		}
+
 		if (EndOfInputStream(cin))
 		{
 			exit(0);
 		}
-	} while (!InputFilter(stod(line))); // loops the input query if error given
+	} while (!InputFilterS(line)); // loops the input query if error given
 	 
 	return stod(line);
+}
+
+bool InputFilterS(string s)
+{
+	for (int i = 0; i < s.length(); i++)
+	{
+		if (isalpha(s[i]))
+		{
+			cout << "You cannot have letters in the input. Please try again." << endl;
+			return false;
+		} // checks if there are any letters in the input
+	}
+	return InputFilter(stod(s)); // checks if input is positive and nonzero
 }
 
 bool InputFilter(double in)
@@ -101,7 +102,7 @@ bool InputFilter(double in)
 	{
 		cout << "You must enter a number, and that number must be positive.  Please try again. " << endl;
 		cin.clear();
-		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		//cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		return false;
 	}
 	else
