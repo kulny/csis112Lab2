@@ -12,11 +12,10 @@ private:
 
 public:
 	Rectangle();
-	Rectangle(double l, double w);
 
 	// Setters
-	void SetLength(int l);
-	void SetWidth(int w);
+	void SetLength(double l);
+	void SetWidth(double w);
 
 	// Getters
 	double GetLength();
@@ -24,5 +23,6 @@ public:
 
 	// Other
 	void ShowData();
+	bool RecIsGood();
 };
 

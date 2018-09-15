@@ -17,10 +17,28 @@ Rectangle::Rectangle()
 	width = 0;
 }
 
-Rectangle::Rectangle(double l, double w)
+void Rectangle::SetLength(double l)
 {
-	length = l;
-	width = w;
+	if (l > 0)
+	{
+		length = l;
+	}
+	else
+	{
+		length = -1;
+	}
+}
+
+void Rectangle::SetWidth(double w)
+{
+	if (w > 0)
+	{
+		width = w;
+	}
+	else
+	{
+		width = -1;
+	}
 }
 
 double Rectangle::GetLength()
@@ -39,4 +57,16 @@ void Rectangle::ShowData()
 	std::cout << "Width is " << width << std::endl;
 	std::cout << "Area is " << CalcArea() << std::endl;
 	std::cout << "Perimeter is " << CalcPerimeter() << std::endl;
+}
+
+bool Rectangle::RecIsGood()
+{
+	if (length < 0 || width < 0)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }
